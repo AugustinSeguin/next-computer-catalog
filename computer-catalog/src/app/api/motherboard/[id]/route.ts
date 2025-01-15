@@ -14,11 +14,6 @@ export const GET = async (request: NextRequest, { params: { id } }: Params) => {
         where: {
             id: parseInt(id),
         },
-        include: {
-            rams: true,
-            motherboard: true,
-            graphicCard: true,
-        },
     });
 
     return NextResponse.json({ message: `Computer updated ${id}`, computer: computer });
@@ -30,32 +25,13 @@ export const PUT = async (request: NextRequest, { params: { id } }: Params) => {
         console.log("Error: id is not defined");
         return NextResponse.json({ message: "Error: id is not defined", status: 500 });
     }
-    const { title, price, motherboardId, ramIds, graphicCardId } = await request.json();
+    const computer = await request.json();
     const updatedComputer = await prisma.computer.update({
         where: {
             id: parseInt(id)
         },
         data: {
-            title: title,
-            price: price,
-            motherboard: {
-                connect: {
-                    id: motherboardId,
-                },
-            },
-            rams: {
-                connect: ramIds.map((id: number) => ({ id })),
-            },
-            graphicCard: {
-                connect: {
-                    id: graphicCardId,
-                },
-            },
-        },
-        include: {
-            rams: true,
-            motherboard: true,
-            graphicCard: true,
+            ...computer
         },
     });
 
@@ -68,32 +44,13 @@ export const PATCH = async (request: NextRequest, { params: { id } }: Params) =>
         console.log("Error: id is not defined");
         return NextResponse.json({ message: "Error: id is not defined", status: 500 });
     }
-    const { title, price, motherboardId, ramIds, graphicCardId } = await request.json();
+    const computer = await request.json();
     const updatedComputer = await prisma.computer.update({
         where: {
             id: parseInt(id)
         },
         data: {
-            title: title,
-            price: price,
-            motherboard: {
-                connect: {
-                    id: motherboardId,
-                },
-            },
-            rams: {
-                connect: ramIds.map((id: number) => ({ id })),
-            },
-            graphicCard: {
-                connect: {
-                    id: graphicCardId,
-                },
-            },
-        },
-        include: {
-            rams: true,
-            motherboard: true,
-            graphicCard: true,
+            ...computer
         },
     });
 

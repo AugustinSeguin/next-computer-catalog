@@ -20,24 +20,13 @@ export const POST = async (request: NextRequest) => {
         data: {
             title: title,
             price: price,
-            motherboard: {
-                connect: {
-                    id: motherboardId,
+            motherboardId: motherboardId,
+            computerRam: {
+                createMany: {
+                    data: ramIds.map((id: number) => ({ ramId: id })),
                 },
             },
-            rams: {
-                connect: ramIds.map((id: number) => ({ id })),
-            },
-            graphicCard: {
-                connect: {
-                    id: graphicCardId,
-                },
-            },
-        },
-        include: {
-            rams: true,
-            motherboard: true,
-            graphicCard: true,
+            graphicCardId: graphicCardId,
         },
     });
     return NextResponse.json({ message: `Computer created ${newComputer.id}`, computer: newComputer });

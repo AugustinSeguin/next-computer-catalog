@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Computer {
+  id      Int      @id @default(autoincrement())
+  title    String
+  price   Int
+  motherboardId Int
+  motherboard Motherboard @relation(fields: [motherboardId], references: [id])
+  rams Ram[]
+  graphicCardId Int
+  graphicCard GraphicCard  @relation(fields: [graphicCardId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Motherboard {
+  id      Int      @id @default(autoincrement())
+  title String
+  reference String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  computer Computer[]
+}
+
+model Ram {
+  id      Int      @id @default(autoincrement())
+  title String
+  power Int
+  reference String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  computers Computer[]
+}
+
+model GraphicCard {
+  id      Int      @id @default(autoincrement())
+  title String
+  power Int
+  reference String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  computer Computer[]
+}
+
