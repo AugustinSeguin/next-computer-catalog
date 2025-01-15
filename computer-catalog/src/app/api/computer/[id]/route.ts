@@ -111,6 +111,6 @@ export const DELETE = async (request: NextRequest, { params: { id } }: Params) =
         },
     });
 
-    return NextResponse.json({ message: `DELETE request ${id}` });
+    return NextResponse.json({ message: `DELETE computer ${id}` });
 }
 

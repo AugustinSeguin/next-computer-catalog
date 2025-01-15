@@ -3,33 +3,25 @@ import { prisma } from "@/tools/prisma";
 
 type Params = { params: { id: string } };
 
-/// This is a GET request for all computers
+/// This is a GET request for all motherboards
 export const GET = async (request: NextRequest) => {
 
-    const computers = await prisma.computer.findMany({
+    const motherboards = await prisma.motherboard.findMany({
         take: 10,
     });
 
-    return NextResponse.json({ message: "GET request", computers: computers });
+    return NextResponse.json({ message: "GET request", motherboards: motherboards });
 }
 
-/// This is a POST request for create a computer
+/// This is a POST request for create a motherboard
 export const POST = async (request: NextRequest) => {
-    const { title, price, motherboardId, ramIds, graphicCardId } = await request.json();
-    const newComputer = await prisma.computer.create({
+    const motherboard = await request.json();
+    const newmotherboard = await prisma.motherboard.create({
         data: {
-            title: title,
-            price: price,
-            motherboardId: motherboardId,
-            computerRam: {
-                createMany: {
-                    data: ramIds.map((id: number) => ({ ramId: id })),
-                },
-            },
-            graphicCardId: graphicCardId,
+            ...motherboard
         },
     });
-    return NextResponse.json({ message: `Computer created ${newComputer.id}`, computer: newComputer });
+    return NextResponse.json({ message: `motherboard created ${newmotherboard.id}`, motherboard: newmotherboard });
 }
 
 

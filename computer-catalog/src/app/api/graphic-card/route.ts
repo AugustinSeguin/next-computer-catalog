@@ -3,27 +3,27 @@ import { prisma } from "@/tools/prisma";
 
 type Params = { params: { id: string } };
 
-/// This is a GET request for all rams
+/// This is a GET request for all graphicCards
 export const GET = async (request: NextRequest) => {
 
-    const rams = await prisma.ram.findMany({
+    const graphicCards = await prisma.graphicCard.findMany({
         take: 10,
     });
 
-    return NextResponse.json({ message: "GET request", rams: rams });
+    return NextResponse.json({ message: "GET request", graphicCards: graphicCards });
 }
 
-/// This is a POST request for create a ram
+/// This is a POST request for create a graphicCard
 export const POST = async (request: NextRequest) => {
     const { title, power, reference } = await request.json();
-    const newram = await prisma.ram.create({
+    const newgraphicCard = await prisma.graphicCard.create({
         data: {
             title: title,
             power: power,
             reference: reference,
         },
     });
-    return NextResponse.json({ message: `ram created ${newram.id}`, ram: newram });
+    return NextResponse.json({ message: `graphicCard created ${newgraphicCard.id}`, graphicCard: newgraphicCard });
 }
 
 
