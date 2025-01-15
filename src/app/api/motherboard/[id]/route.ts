@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/tools/prisma";
 
-type Params = { params: { id: string } };
+type Params = { params: Promise<{ id: string }> };
 
 /// This is a GET request for one motherboard
-export const GET = async (request: NextRequest, { params: { id } }: Params) => {
+export const GET = async (request: NextRequest, param: Params) => {
+    const {id} = await param.params;
     if (!id) {
         console.log("Error: id is not defined");
         return NextResponse.json({ message: "Error: id is not defined", status: 500 });
@@ -20,7 +21,8 @@ export const GET = async (request: NextRequest, { params: { id } }: Params) => {
 }
 
 /// This is a PUT request for motherboard
-export const PUT = async (request: NextRequest, { params: { id } }: Params) => {
+export const PUT = async (request: NextRequest, param: Params) => {
+    const {id} = await param.params;
     if (!id) {
         console.log("Error: id is not defined");
         return NextResponse.json({ message: "Error: id is not defined", status: 500 });
@@ -39,7 +41,8 @@ export const PUT = async (request: NextRequest, { params: { id } }: Params) => {
 }
 
 /// This is a PATCH request for motherboard
-export const PATCH = async (request: NextRequest, { params: { id } }: Params) => {
+export const PATCH = async (request: NextRequest, param: Params) => {
+    const {id} = await param.params;
     if (!id) {
         console.log("Error: id is not defined");
         return NextResponse.json({ message: "Error: id is not defined", status: 500 });
@@ -57,12 +60,13 @@ export const PATCH = async (request: NextRequest, { params: { id } }: Params) =>
     return NextResponse.json({ message: `motherboard updated ${id}`, motherboard: updatedmotherboard });
 }
 
-export const DELETE = async (request: NextRequest, { params: { id } }: Params) => {
+export const DELETE = async (request: NextRequest,param: Params) => {
+    const {id} = await param.params;
     if (!id) {
         console.log("Error: id is not defined");
         return NextResponse.json({ message: "Error: id is not defined", status: 500 });
     }
-    const motherboard = await prisma.motherboard.delete({
+    await prisma.motherboard.delete({
         where: {
             id: parseInt(id)
         },

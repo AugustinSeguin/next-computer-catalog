@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/tools/prisma";
 
-type Params = { params: { id: string } };
-
 /// This is a GET request for all rams
 export const GET = async (request: NextRequest) => {
 
