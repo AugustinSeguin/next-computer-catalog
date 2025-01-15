@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/tools/prisma";
 
 /// This is a GET request for all rams
-export const GET = async (request: NextRequest) => {
+export const GET = async () => {
 
     const rams = await prisma.ram.findMany({
         take: 10,

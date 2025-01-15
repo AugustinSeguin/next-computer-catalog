@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from "@/tools/prisma";
 
 /// This is a GET request for all motherboards
-export const GET = async (request: NextRequest) => {
+export const GET = async () => {
 
     const motherboards = await prisma.motherboard.findMany({
         take: 10,
