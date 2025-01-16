@@ -17,6 +17,12 @@ npx prisma migrate dev
 npx prisma db push
 ```
 
+Create auth API key (in .env)
+```bash
+npx auth secret
+```
+
+
 Run the development server:
 
 ```bash
@@ -32,5 +38,3 @@ pnpm vercel deploy --prod # en production /!\
 
 pnpm vercel deploy 
 ```
-
-
